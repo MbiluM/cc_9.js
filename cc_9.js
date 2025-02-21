@@ -41,24 +41,28 @@ console.log(mgr1.calculateBonus());
 // Expected output: 9600
 
 
-// Task 3 - Created Company Class
+// Task 3 - Created Company Class & Task 4 - Implemented Payroll System
 class Company {
     constructor(name) {
       this.name = name;
-      this.employees = []; //array to store employee objects
-    };
-    addEmployee(employee) {
-        this.employees.push(employee) //adds an employee to the array
-    };
+      this.emp = []; //array to store employee objects
+    }
+    addEmployee(emp) {
+        this.emp.push(emp); //adds an employee to the array
+    }
     listEmployees() {
-        this.employees.forEach(emp => console.log(emp.getDetails())); //logs all employees’ details
-    };
-};
+        this.emp.forEach(emp => console.log(emp.getDetails())); //logs all employees’ details
+    }
+    calculateTotalPayroll() {
+        return this.emp.reduce((total, emp) => total + emp.calculateAnnualSalary(), 0);
+    }
+}
 const company = new Company("TechCorp");
 company.addEmployee(emp1);
 company.addEmployee(mgr1);
 company.listEmployees();
+console.log(company.calculateTotalPayroll()); 
 // Expected output:
 // "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
 // "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
-
+// Expected output: 165600 (assuming emp1 and mgr1 salaries)
