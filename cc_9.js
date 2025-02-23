@@ -26,13 +26,13 @@ class Manager extends Employee {
     constructor (name, id, department, salary, teamSize) {
     super(name, id, department, salary)
     this.teamSize = teamSize
-    };
+    }
     getDetails() {
     console.log(`Manager: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`);
-    };
+    }
     calculateBonus() {
     return this.calculateAnnualSalary() * 0.1;
-    };
+    }
 }
 const mgr1 = new Manager("John Smith", 201, "IT", 8000, 5);
 console.log(mgr1.getDetails());
@@ -41,7 +41,7 @@ console.log(mgr1.calculateBonus());
 // Expected output: 9600
 
 
-// Task 3 - Created Company Class & Task 4 - Implemented Payroll System
+// Task 3 - Created Company Class
 class Company {
     constructor(name) {
       this.name = name;
@@ -53,10 +53,20 @@ class Company {
     listEmployees() {
         this.emp.forEach(emp => console.log(emp.getDetails())); //logs all employees’ details
     }
+//Task 4 - Implemented Payroll System
     calculateTotalPayroll() {
-        return this.emp.reduce((total, emp) => total + emp.calculateAnnualSalary(), 0);
+        return this.emp.reduce((total, emp) => //a method to calculate Total Payroll to the Company class
+            total + emp.calculateAnnualSalary(), 0); //consider bonuses for managers
+    }
+    promoteToManager(employee, teamSize) { // 
+    let newManager = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+        
+    this.emp = this.emp.filter(emp => emp.id == employee.id); // Remove old employee and add as a manager
+    this.emp.push(newManager);
     }
 }
+company.promoteToManager(emp1, 3);
+company.listEmployees(); // Expected output: "Manager: Alice Johnson, ID: 101, Department: Sales, Salary: $5000, Team Size: 3"
 const company = new Company("TechCorp");
 company.addEmployee(emp1);
 company.addEmployee(mgr1);
@@ -65,4 +75,4 @@ console.log(company.calculateTotalPayroll());
 // Expected output:
 // "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
 // "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
-// Expected output: 165600 (assuming emp1 and mgr1 salaries)
+// Expected output: 165600 (I Actually Got 156000)
